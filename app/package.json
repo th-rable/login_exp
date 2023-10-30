@@ -83,9 +83,8 @@
     "utils-merge": "1.0.1",
     "vary": "1.1.2"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "node ./bin/www.js",
+    "start": "nodemon ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
