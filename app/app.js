@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(morgan("dev"));
-app.use(morgan("common",{stream: accessLogStream}));
+//app.use(morgan("common",{stream: accessLogStream}));
 
 
 app.use("/",home);
