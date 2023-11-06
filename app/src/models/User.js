@@ -1,6 +1,7 @@
 "use strict";
 
 const UserStorage = require("./UserStorage");
+const CryptoJs = require("crypto-js");
 
 class User{
     constructor(body){
@@ -9,6 +10,8 @@ class User{
 
     async login(){
         const client = this.body;
+        const client_ps = CryptoJs.SHA256(client.psword).toString();
+        //console.log(client_ps);
 
         try {
             const data = await UserStorage.getUserInfo(client.id);
@@ -19,7 +22,7 @@ class User{
 
 
             if(id){
-                if(id === client.id && psword === client.psword){
+                if(id === client.id && psword === client_ps){
                     return {success: true};
                 }
                 return {success: false, msg: "비밀번호가 틀렸습니다."};

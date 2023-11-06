@@ -22,7 +22,8 @@ function login(){
         .then((res) => res.json())
         .then((res) => {
             if(res.success){
-                location.href = "/";
+                //location.href = "/";
+                alert("로그인 성공!");
             }else{
                 alert(res.msg);
             }

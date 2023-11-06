@@ -14,6 +14,8 @@ function handleDisconnect(){
     connection.connect(function(err){
         if(err){
             console.log("error when connect to db");
+            handleDisconnect();
+            return;
         }
     });
 

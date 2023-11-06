@@ -1,6 +1,7 @@
 "use strict";
 
 var db = require("../config/db");
+const CryptoJs = require("crypto-js");
 
 class UserStorage{
 
@@ -18,9 +19,12 @@ class UserStorage{
     
     static async save(userInfo){
         db = require("../config/db");
+
+        const userPs = CryptoJs.SHA256(userInfo.psword).toString();
+        //console.log(userPs);
         return new Promise((resolve,reject)=>{
             const query = "INSERT INTO users(id, name, psword) VALUES(?, ?, ?);";
-            db.query(query,[userInfo.id,userInfo.name,userInfo.psword],(err)=>{
+            db.query(query,[userInfo.id,userInfo.name,userPs],(err)=>{
                 if(err) reject(`${err}`);
                 resolve({success: true});
             });
