@@ -23,7 +23,7 @@ class User{
 
             if(id){
                 if(id === client.id && psword === client_ps){
-                    return {success: true};
+                    return {success: true, loginid: id};
                 }
                 return {success: false, msg: "비밀번호가 틀렸습니다."};
             }
