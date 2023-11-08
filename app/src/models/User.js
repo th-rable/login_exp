@@ -46,6 +46,33 @@ class User{
         }
         
     }
+
+    async changePw(){
+        const client = this.body;
+        const client_ps = CryptoJs.SHA256(client.psword).toString();
+        try {
+            const data = await UserStorage.getUserInfo(client.id);
+            if(data == undefined){
+                return {success: true, msg: "잘못된 접근입니다."};
+            }
+            const {id, psword} = data;
+            const newpw = client.newpsword;
+
+            if(id){
+                if(id === client.id && psword === client_ps){
+                    const response = await UserStorage.changePw(id,newpw);
+                    if(response.success){
+                        return {success: true, msg: "비밀번호가 변경되었습니다."};
+                    }
+                    return {success: false, msg: "오류입니다."};
+                }
+                return {success: false, msg: "비밀번호가 틀렸습니다."};
+            }
+            return {success: true, msg: "잘못된 접근입니다."};
+        } catch (error) {
+            
+        }
+    }
  }
 
  module.exports = User;

@@ -50,7 +50,24 @@ const output = {
             
         }
         
-    }
+    },
+    chpsword: async(req,res)=>{
+        let response = await UserLoginCookie.checklogin(req);
+        if(response.success){
+            res.render("home/chpsword");
+        }
+        else{
+            
+            await res.cookie('login',false);
+            await res.cookie('loginid',null);
+            await res.cookie('key',null);
+
+            await res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            await res.write("<script>alert(\""+response.msg+"\")</script>");
+            await res.write("<script>window.location=\"../login\"</script>");
+            
+        }
+    },
 };
 
 
@@ -102,6 +119,22 @@ const process = {
         let response = await UserLoginCookie.checklogin(req);
         const data = await UserStorage.getUserInfo(response.id);
         return res.json({name:data.name});
+    },
+    chpsword:async(req,res)=>{
+        
+        let checklogin = await UserLoginCookie.checklogin(req);
+
+        if(checklogin.success==false){
+            await res.cookie('key',null);
+            await res.cookie('login',false);
+            await res.cookie('loginid',null);
+            return res.json({success:true,msg:checklogin.msg});
+        }
+        const user = new User({id:checklogin.id,psword:req.body.nowpw,newpsword:req.body.newpw});
+        const response = await user.changePw();
+
+        return res.json(response);
+
     }
 };
 

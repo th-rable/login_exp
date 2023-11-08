@@ -1,7 +1,9 @@
 const logoutBtn = document.querySelector("#logout");
 const nameTx = document.querySelector("#name");
+const chpwBtn = document.querySelector("#changepsword");
 
 logoutBtn.addEventListener("click", logout);
+chpwBtn.addEventListener("click", chpsword);
 
 fetch("/profile",{
     method: "POST",
@@ -23,4 +25,9 @@ function logout(){
     }).catch((err)=>{
         
     });
+}
+
+function chpsword(){
+    location.href="/chpsword";
+    return;
 }

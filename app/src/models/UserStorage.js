@@ -31,6 +31,19 @@ class UserStorage{
         });
     }
 
+    static async changePw(id, newpw){
+        db = require("../config/db");
+
+        const userPs = CryptoJs.SHA256(newpw).toString();
+        return new Promise((resolve,reject)=>{
+            const query = "UPDATE users SET psword = ? WHERE id = ?;";
+            db.query(query,[userPs,id],(err)=>{
+                if(err) reject(`${err}`);
+                resolve({success: true});
+            });
+        });
+    }
+
         
 }
 
